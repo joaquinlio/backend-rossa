@@ -18,8 +18,8 @@ import { QUALIFICATIONS } from "../utils/constants"
  * @return              void
  *
  */
-export async function sendMail(review: rossa.reviews.review, answers: rossa.reviews.answer[]): Promise<void> {
- 
+export async function sendMail(review: rossa.reviews.review, answers: rossa.reviews.answer[], to: string ): Promise<void> {
+
   // Creamos el objeto con la cuenta de mail de donde saldra el mensaje
   const transporter = nodemailer.createTransport({
     host: MAIL_HOST,
@@ -34,6 +34,7 @@ export async function sendMail(review: rossa.reviews.review, answers: rossa.revi
     ignoreTLS: false
   });
 
+  // Calificaciones
   const qualifications = {
     [QUALIFICATIONS.DISSATISFIED]: "Debe mejorar",
     [QUALIFICATIONS.NEUTRAL]: "Aceptable",
@@ -97,13 +98,11 @@ export async function sendMail(review: rossa.reviews.review, answers: rossa.revi
     // Direccion donde se envia
     to: "joaquinlio97@gmail.com",//to: 'pastarossaadrogueencuestas@gmail.com', 
     // Sujeto
-    subject: `Reseña de ${review.name || ''}`, 
+    subject: to,//`Reseña de ${review.name || ''}`, 
     // Template del email
     html: html
     
   }, (err, info) => {
-
-    //console.log(info);
 
     // Si obtuvimos en un error
     if (err) {

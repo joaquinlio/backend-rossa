@@ -2,16 +2,14 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
-import DotEnv from "dotenv";
 import db from "./services/db";
 import bodyParser from "body-parser";
+import { config } from 'dotenv';
+
 /**
  * @desc Importación de las variables de entorno.
 */
-
-DotEnv.config({ 
-    path: path.resolve(process.cwd(), 'dev.env' )     
-});
+config()
 
 const app = express();
 

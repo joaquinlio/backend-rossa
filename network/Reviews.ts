@@ -3,7 +3,7 @@ import db from "../services/db";
 import * as nodemailer from "../services/nodemailer"
 
 // Constantes 
-import { QUALIFICATIONS } from "../utils/constants"
+import { QUALIFICATIONS, STORES } from "../utils/constants"
 
 /**
  * @desc Añade una reseña
@@ -112,12 +112,12 @@ export async function addReview( review: rossa.reviews.review ) : Promise<boolea
  * @return                true o false
  *
  */
- export async function sendEmail( review: rossa.reviews.review, answers: rossa.reviews.answer[] ) : Promise<boolean | number>{
+ export async function sendEmail( review: rossa.reviews.review, answers: rossa.reviews.answer[], to: string ) : Promise<boolean | number>{
         
     try {
 
         // Envio del email
-        const result = nodemailer.sendMail(review, answers)
+        const result = nodemailer.sendMail(review, answers, to)
                      
         // Ejecuta el envio
         if (result) {
@@ -144,7 +144,7 @@ export async function addReview( review: rossa.reviews.review ) : Promise<boolea
  * @return                true o false
  *
  */
- export async function getAll( dateFrom: string, dateTo: string ) : Promise<rossa.reviews.review[] | boolean>{
+ export async function getAll( dateFrom: string, dateTo: string, store: string ) : Promise<rossa.reviews.review[] | boolean>{
         
     try {
 
@@ -154,10 +154,13 @@ export async function addReview( review: rossa.reviews.review ) : Promise<boolea
                 *
             FROM 
                 reviews
-            WHERE
-                store = 'ADROGUE' AND
+            WHERE                
                 date BETWEEN '${dateFrom}' AND '${dateTo}'
         `;
+
+        if(store !== STORES.ALL){
+            sql += ` AND store = '${store}'`
+        }
                    
         // Ejecuta la consulta
         const result = await db.Execute(sql);
@@ -323,6 +326,46 @@ export async function addReview( review: rossa.reviews.review ) : Promise<boolea
         console.error(`Reviews.js (get): error (${err.stack})`);
        
         return false;
+    }
+}
+
+/**
+ * @desc Obtiene el email del local 
+ *
+ * @param store          local
+ * 
+ * @return                true o false
+ *
+ */
+ export async function getStoreEmail( store: string ) : Promise<string>{
+        
+    try {
+
+        // Sentencia Sql
+        let sql = `
+            SELECT 
+                email
+            FROM stores
+            WHERE name = '${ store }'
+            ;
+        `;
+                    
+        // Ejecuta la consulta
+        const result = await db.Execute(sql);
+                     
+        // Ejecuta el envio
+        if (result) {            
+            
+            // Asigna los datos
+            const store = result[0][0];
+
+            return store.email;
+
+        } else {
+            console.error("Reviews.js (get): ocurrio un error al obtener la reseña");                        
+        }
+    } catch(err) {
+        console.error(`Reviews.js (get): error (${err.stack})`);               
     }
 }
 

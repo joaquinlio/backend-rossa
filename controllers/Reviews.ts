@@ -58,9 +58,14 @@ export async function addReview( req: Request, res: Response): Promise<void> {
         if(!saveAnswers)
             return response.error(req, res, `controllers/Reviews.ts (addReview): error al insertar las respuestas del cliente`, 500);
 
-        // Envio del email con el resultado de la reseña 
-        await network.sendEmail(Review, answers);
-        
+        // Obtenemos el mail del local
+        const storeEmail = await network.getStoreEmail( Review.store )
+
+        if( storeEmail ){
+            // Envio del email con el resultado de la reseña 
+            await network.sendEmail(Review, answers, storeEmail);
+        }
+                
         // Respuesta
         return response.success(req, res, addReview, 200);
         
@@ -120,12 +125,13 @@ export async function getReviews( req: Request, res: Response): Promise<void> {
 
     try {
 
-         // Datos del request
+        // Datos del request
+        let store = req.query.store as string;
         let dateFrom = req.query.dateFrom as string;
         let dateTo = req.query.dateTo as string;
 
          // Verifica los parametros requeridos
-        if ( !dateFrom || dateFrom.length !== 8 || !dateTo || dateTo.length !== 8 ) {
+        if ( !store || !dateFrom || dateFrom.length !== 8 || !dateTo || dateTo.length !== 8 ) {
            
             // Envia la respuesta
             return response.error(req, res, `controllers/Reviews.ts (getReviews): parametros invalidos`, 400);     
@@ -138,7 +144,7 @@ export async function getReviews( req: Request, res: Response): Promise<void> {
         dateTo = `${dateTo.slice(0, 4)}-${dateTo.slice(4, 6)}-${dateTo.slice(6, 8)} 23:59:59`;
 
         // Guarda la reseña en la base de datos
-        const reviews = await network.getAll(dateFrom, dateTo)
+        const reviews = await network.getAll(dateFrom, dateTo, store)
 
         if(!reviews)
             // Envia la respuesta

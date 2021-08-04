@@ -3,11 +3,10 @@ declare namespace rossa.users {
   export interface user {
 
     id: number | undefined;
-    name: string;
-    surname: string;
+    username: string;
     email: string;
     password?: string | undefined;
-    expToken?: string;
+    store?: string;
     
   }
 }

@@ -11,5 +11,6 @@ export const QUALIFICATIONS = {
 
 // Locales
 export const STORES = {
-    ADROGUE: "ADROGUE"  
+    ADROGUE: "ADROGUE" ,
+    ALL: "ALL"
 };

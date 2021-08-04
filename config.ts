@@ -1,3 +1,9 @@
+  import { config } from 'dotenv';
+
+  /**
+ * @desc Importación de las variables de entorno.
+*/
+  config()
 
   const apiPort: number = parseInt(process.env.PORT) || 3000;
   const jwtsecret: string = process.env.JWT_SECRET || "rossa2020**";
