@@ -180,10 +180,13 @@ export async function addReview( review: rossa.reviews.review ) : Promise<boolea
                 FROM 
                     answers
                 LEFT JOIN
-                    reviews ON reviews.id = answers.review_id 
-                WHERE
-                    reviews.store = 'ADROGUE'
+                    reviews ON reviews.id = answers.review_id                 
             `;
+
+            if(store !== STORES.ALL){
+                sql += ` WHERE
+                            reviews.store = '${store}'`
+            }
                 
             // Ejecuta la consulta
             const resultAnswers = await db.Execute(sqlAnswers);

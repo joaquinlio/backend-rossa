@@ -9,7 +9,7 @@ import * as network from "../network/Questions";
 /**
  * @desc Utilidades
  */
- const response = require("../utils/Response");
+ import * as response from "../utils/Response";
 
 /**
  * @desc Controlador de las preguntas.

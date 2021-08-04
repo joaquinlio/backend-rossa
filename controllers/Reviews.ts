@@ -9,7 +9,7 @@ import * as network from "../network/Reviews";
 /**
  * @desc Utilidades
  */
- const response = require("../utils/Response");
+ import * as response from "../utils/Response";
 
 /**
  * @desc Controlador de reseñas.
@@ -143,7 +143,7 @@ export async function getReviews( req: Request, res: Response): Promise<void> {
                        
         dateTo = `${dateTo.slice(0, 4)}-${dateTo.slice(4, 6)}-${dateTo.slice(6, 8)} 23:59:59`;
 
-        // Guarda la reseña en la base de datos
+        // Obtiene las reseñas de la base de datos
         const reviews = await network.getAll(dateFrom, dateTo, store)
 
         if(!reviews)

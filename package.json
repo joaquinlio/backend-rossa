@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon -e ts --exec \"npm run compile\"",
+    "dev": "nodemon -e ts --ignore js/ --exec \"npm run compile\"",
     "compile": "tsc && node dist/js/server.js",
     "server": "node dist/js/server.js",
     "debug": "nodemon --inspect dist/js/server.js"

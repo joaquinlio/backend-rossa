@@ -12,7 +12,7 @@ import * as network from "../network/Users";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const response = require("../utils/Response");
+import * as response from "../utils/Response";
 
 
 /**

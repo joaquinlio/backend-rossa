@@ -9,7 +9,7 @@ import bcrypt from "bcrypt"
 /**
  * @desc Utilidades
  */
- const response = require("../utils/Response");
+ import * as response from "../utils/Response";
 
 /**
  * @desc Controlador de usuarios.
