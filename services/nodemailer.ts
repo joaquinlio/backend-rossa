@@ -96,9 +96,9 @@ export async function sendMail(review: rossa.reviews.review, answers: rossa.revi
     // Direccion de donde sale el email
     from: 'pastarosamailer@nicolasaugustolio.com.ar',
     // Direccion donde se envia
-    to: "joaquinlio97@gmail.com",//to: 'pastarossaadrogueencuestas@gmail.com', 
+    to: to, 
     // Sujeto
-    subject: to,//`Reseña de ${review.name || ''}`, 
+    subject: `Reseña de ${review.name || ''}`, 
     // Template del email
     html: html
     
