@@ -7,10 +7,10 @@
     {
       "type": "node",
       "request": "attach",
-      "name": "Node: Nodemon",
-      "processId": "${command:PickProcess}",
+      "name": "Node: Nodemon",      
       "restart": true,
-      "protocol": "inspector"
+      "remoteRoot": "/usr/app",
+      "port": 9229
     }
   ]
 }
