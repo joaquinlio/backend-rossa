@@ -88,6 +88,7 @@ export async function getByEmail(email: string): Promise<rossa.users.user | unde
       // Creamos la consulta
       const sql = `
         SELECT
+              id,
               username,
               password,
               email,
@@ -112,8 +113,8 @@ export async function getByEmail(email: string): Promise<rossa.users.user | unde
       }
           
       // Asigna los resultados
-      const row = result[0][0];        
-  
+      const row = result[0][0];    
+
       const user: rossa.users.user = {
         id: row.id,
         username: row.username,

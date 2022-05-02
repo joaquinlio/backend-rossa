@@ -158,10 +158,10 @@ export async function addReview( review: rossa.reviews.review ) : Promise<boolea
                 date BETWEEN '${dateFrom}' AND '${dateTo}'
         `;
 
-        if(store !== STORES.ALL){
-            sql += ` AND store = '${store}'`
+        if(store !== STORES.ALL){                      
+            sql += ` AND store IN (${store.split(',').map(store => `'${store}'`).join(',')})`;
         }
-                   
+        
         // Ejecuta la consulta
         const result = await db.Execute(sql);
                      
@@ -185,7 +185,7 @@ export async function addReview( review: rossa.reviews.review ) : Promise<boolea
 
             if(store !== STORES.ALL){
                 sql += ` WHERE
-                            reviews.store = '${store}'`
+                            reviews.store = IN (${store.split(',').map(store => `'${store}'`).join(',')})`
             }
                 
             // Ejecuta la consulta

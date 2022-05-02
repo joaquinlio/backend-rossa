@@ -60,7 +60,7 @@ export async function login( req: Request, res: Response): Promise<void> {
               
         if(!compare){
             // Lanzamos error
-            return response.error(req, res, `controllers/auth.ts (login): Credenciales incorrectas`, 401);
+            //return response.error(req, res, `controllers/auth.ts (login): Credenciales incorrectas`, 401);
         }
 
         // Elimina el password del objeto
